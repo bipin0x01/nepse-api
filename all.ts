@@ -94,20 +94,143 @@ async function GetMarketStatus() {
   }
 }
 
-// function GetValidBodyId(marketId: number) {
-//   const dummyData = [
-//     147, 117, 239, 143, 157, 312, 161, 612, 512, 804, 411, 527, 170, 511, 421,
-//     667, 764, 621, 301, 106, 133, 793, 411, 511, 312, 423, 344, 346, 653, 758,
-//     342, 222, 236, 811, 711, 611, 122, 447, 128, 199, 183, 135, 489, 703, 800,
-//     745, 152, 863, 134, 211, 142, 564, 375, 793, 212, 153, 138, 153, 648, 611,
-//     151, 649, 318, 143, 117, 756, 119, 141, 717, 113, 112, 146, 162, 660, 693,
-//     261, 362, 354, 251, 641, 157, 178, 631, 192, 734, 445, 192, 883, 187, 122,
-//     591, 731, 852, 384, 565, 596, 451, 772, 624, 691,
-//   ];
-//   const currentDate = new Date();
-//   const datePart = currentDate.getDate();
-//   const id = dummyData[marketId] + marketId + 2 * datePart;
-//   return id;
-// }
+function GetValidBodyId(marketId: number) {
+  const dummyData = [
+    147, 117, 239, 143, 157, 312, 161, 612, 512, 804, 411, 527, 170, 511, 421,
+    667, 764, 621, 301, 106, 133, 793, 411, 511, 312, 423, 344, 346, 653, 758,
+    342, 222, 236, 811, 711, 611, 122, 447, 128, 199, 183, 135, 489, 703, 800,
+    745, 152, 863, 134, 211, 142, 564, 375, 793, 212, 153, 138, 153, 648, 611,
+    151, 649, 318, 143, 117, 756, 119, 141, 717, 113, 112, 146, 162, 660, 693,
+    261, 362, 354, 251, 641, 157, 178, 631, 192, 734, 445, 192, 883, 187, 122,
+    591, 731, 852, 384, 565, 596, 451, 772, 624, 691,
+  ];
+  const currentDate = new Date();
+  const datePart = currentDate.getDate();
+  const id = dummyData[marketId] + marketId + 2 * datePart;
+  return id;
+}
 
-export { GetMarketStatus };
+async function GetNotice() {
+  const token = await GetAccessToken();
+  const marketData = await axios.get(`${BASE_URL}/web/notice`, {
+    httpsAgent: new https.Agent({
+      rejectUnauthorized: false, // set to false
+    }),
+    headers: {
+      authorization: `Salter ${token}`,
+      "User-Agent":
+        "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0",
+    },
+  });
+
+  try {
+    if (marketData) {
+      return marketData.data;
+    }
+  } catch (error) {
+    return null;
+  }
+}
+
+async function GetSecurities() {
+  const token = await GetAccessToken();
+  const marketData = await axios.get(
+    `${BASE_URL}/nots/security?nonDelisted=true`,
+    {
+      httpsAgent: new https.Agent({
+        rejectUnauthorized: false, // set to false
+      }),
+      headers: {
+        authorization: `Salter ${token}`,
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0",
+      },
+    }
+  );
+
+  try {
+    if (marketData) {
+      return marketData.data;
+    }
+  } catch (error) {
+    return null;
+  }
+}
+
+async function GetTopGainers() {
+  const token = await GetAccessToken();
+  const marketData = await axios.get(`${BASE_URL}/nots/top-ten/top-gainer`, {
+    httpsAgent: new https.Agent({
+      rejectUnauthorized: false, // set to false
+    }),
+    headers: {
+      authorization: `Salter ${token}`,
+      "User-Agent":
+        "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0",
+    },
+  });
+
+  try {
+    if (marketData) {
+      return marketData.data;
+    }
+  } catch (error) {
+    return null;
+  }
+}
+
+async function GetFloorsheet() {
+  const token = await GetAccessToken();
+  const marketData = await axios.get(`${BASE_URL}/nots/nepse-data/floorsheet`, {
+    httpsAgent: new https.Agent({
+      rejectUnauthorized: false, // set to false
+    }),
+    headers: {
+      authorization: `Salter ${token}`,
+      "User-Agent":
+        "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0",
+    },
+  });
+
+  try {
+    if (marketData) {
+      return marketData.data;
+    }
+  } catch (error) {
+    return null;
+  }
+}
+
+async function GetTodayPrice() {
+  const token = await GetAccessToken();
+  const marketData = await axios.get(
+    `${BASE_URL}/nots/securityDailyTradeStat/58`,
+    {
+      httpsAgent: new https.Agent({
+        rejectUnauthorized: false, // set to false
+      }),
+      headers: {
+        authorization: `Salter ${token}`,
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0",
+      },
+    }
+  );
+
+  try {
+    if (marketData) {
+      return marketData.data;
+    }
+  } catch (error) {
+    return null;
+  }
+}
+
+export {
+  GetMarketStatus,
+  GetNotice,
+  GetSecurities,
+  GetTopGainers,
+  GetFloorsheet,
+  GetTodayPrice,
+};

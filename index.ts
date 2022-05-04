@@ -1,9 +1,17 @@
 import express from "express";
-import { GetMarketStatus } from "./all";
+import {
+  GetFloorsheet,
+  GetMarketStatus,
+  GetNotice,
+  GetSecurities,
+  GetTodayPrice,
+  GetTopGainers,
+} from "./all";
 
 const app = express();
 const port = 3000;
 
+// app.use(express.json());
 app.listen(port, () => {
   console.log(`App in running on port ${port}.`);
 });
@@ -17,8 +25,50 @@ async function marketStatus() {
   }
 }
 
-console.log(marketStatus());
 app.get("/api/market-status", function (req, res) {
   res.setHeader("Content-Type", "application/json");
-  res.send(marketStatus());
+  const a = marketStatus();
+  a.then(function (status) {
+    res.json(status);
+  });
+});
+
+app.get("/api/notice", function (req, res) {
+  res.setHeader("Content-Type", "application/json");
+  const a = GetNotice();
+  a.then(function (status) {
+    res.json(status);
+  });
+});
+
+app.get("/api/securities", function (req, res) {
+  res.setHeader("Content-Type", "application/json");
+  const a = GetSecurities();
+  a.then(function (status) {
+    res.json(status);
+  });
+});
+
+app.get("/api/top-gainers", function (req, res) {
+  res.setHeader("Content-Type", "application/json");
+  const a = GetTopGainers();
+  a.then(function (status) {
+    res.json(status);
+  });
+});
+
+app.get("/api/floorsheet", function (req, res) {
+  res.setHeader("Content-Type", "application/json");
+  const a = GetFloorsheet();
+  a.then(function (status) {
+    res.json(status);
+  });
+});
+
+app.get("/api/today-price", function (req, res) {
+  res.setHeader("Content-Type", "application/json");
+  const a = GetTodayPrice();
+  a.then(function (status) {
+    res.json(status);
+  });
 });
