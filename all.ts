@@ -226,6 +226,50 @@ async function GetTodayPrice() {
   }
 }
 
+async function GetBrokerList() {
+  const token = await GetAccessToken();
+  const marketData = await axios.get(`${BASE_URL}/nots/member?&size=100`, {
+    httpsAgent: new https.Agent({
+      rejectUnauthorized: false, // set to false
+    }),
+    headers: {
+      authorization: `Salter ${token}`,
+      "User-Agent":
+        "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0",
+    },
+  });
+
+  try {
+    if (marketData) {
+      return marketData.data;
+    }
+  } catch (error) {
+    return null;
+  }
+}
+
+// async function GetMarketSummary() {
+//   const token = await GetAccessToken();
+//   const marketData = await axios.get(`${BASE_URL}/nots/market-summary`, {
+//     httpsAgent: new https.Agent({
+//       rejectUnauthorized: false, // set to false
+//     }),
+//     headers: {
+//       authorization: `Salter ${token}`,
+//       "User-Agent":
+//         "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0",
+//     },
+//   });
+
+//   try {
+//     if (marketData) {
+//       return marketData.data;
+//     }
+//   } catch (error) {
+//     return null;
+//   }
+// }
+
 export {
   GetMarketStatus,
   GetNotice,
@@ -233,4 +277,5 @@ export {
   GetTopGainers,
   GetFloorsheet,
   GetTodayPrice,
+  GetBrokerList,
 };

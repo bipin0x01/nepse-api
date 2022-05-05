@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  GetBrokerList,
   GetFloorsheet,
   GetMarketStatus,
   GetNotice,
@@ -72,3 +73,19 @@ app.get("/api/today-price", function (req, res) {
     res.json(status);
   });
 });
+
+app.get("/api/brokers", function (req, res) {
+  res.setHeader("Content-Type", "application/json");
+  const a = GetBrokerList();
+  a.then(function (status) {
+    res.json(status);
+  });
+});
+
+// app.get("/api/market-summary", function (req, res) {
+//   res.setHeader("Content-Type", "application/json");
+//   const a = GetMarketSummary();
+//   a.then(function (status) {
+//     res.json(status);
+//   });
+// });
