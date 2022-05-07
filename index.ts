@@ -5,6 +5,7 @@ import {
   GetMarketStatus,
   GetNotice,
   GetSecurities,
+  GetSubIndex,
   GetTodayPrice,
   GetTopGainers,
 } from "./all";
@@ -82,10 +83,10 @@ app.get("/api/brokers", function (req, res) {
   });
 });
 
-// app.get("/api/market-summary", function (req, res) {
-//   res.setHeader("Content-Type", "application/json");
-//   const a = GetMarketSummary();
-//   a.then(function (status) {
-//     res.json(status);
-//   });
-// });
+app.get("/api/subindex", function (req, res) {
+  res.setHeader("Content-Type", "application/json");
+  const a = GetSubIndex();
+  a.then(function (status) {
+    res.json(status);
+  });
+});
