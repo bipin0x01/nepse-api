@@ -6,8 +6,9 @@ import {
   GetNotice,
   GetSecurities,
   GetSubIndex,
-  GetTodayPrice,
   GetTopGainers,
+  GetTodayPrice,
+  GetMarketSummary,
 } from "./all";
 
 const app = express();
@@ -83,7 +84,15 @@ app.get("/api/brokers", function (req, res) {
   });
 });
 
-app.get("/api/subindex/:indexcode", function (req, res) {
+app.get("/api/market-summary", function (req, res) {
+  res.setHeader("Content-Type", "application/json");
+  const a = GetMarketSummary();
+  a.then(function (status) {
+    res.json(status);
+  });
+});
+
+app.get("/api/index/:indexcode", function (req, res) {
   res.setHeader("Content-Type", "application/json");
   const code = req.params.indexcode as string;
   const a = GetSubIndex(code);
@@ -91,3 +100,6 @@ app.get("/api/subindex/:indexcode", function (req, res) {
     res.json(status);
   });
 });
+
+// 58 for NEPSE
+//
