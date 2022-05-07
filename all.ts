@@ -250,7 +250,7 @@ async function GetBrokerList() {
 
 async function GetSubIndex() {
   const token = await GetAccessToken();
-  const marketData = await axios.get(`${BASE_URL}/nots/sectorwise`, {
+  const marketData = await axios.get(`${BASE_URL}/nots/index`, {
     httpsAgent: new https.Agent({
       rejectUnauthorized: false, // set to false
     }),
