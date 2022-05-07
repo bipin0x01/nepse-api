@@ -83,9 +83,10 @@ app.get("/api/brokers", function (req, res) {
   });
 });
 
-app.get("/api/subindex", function (req, res) {
+app.get("/api/subindex/:indexcode", function (req, res) {
   res.setHeader("Content-Type", "application/json");
-  const a = GetSubIndex();
+  const code = req.params.indexcode as string;
+  const a = GetSubIndex(code);
   a.then(function (status) {
     res.json(status);
   });
