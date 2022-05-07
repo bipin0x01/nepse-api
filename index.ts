@@ -95,8 +95,9 @@ app.get("/api/market-summary", function (req, res) {
 
 app.get("/api/index/:indexcode", function (req, res) {
   res.setHeader("Content-Type", "application/json");
-  const code = req.params.indexcode as string;
-  const a = GetSubIndex(code);
+  // convert string param to number
+  const code = parseInt(req.params.indexcode);
+  const a = GetSubIndex(code as number);
   a.then(function (status) {
     res.json(status);
   });
