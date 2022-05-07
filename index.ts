@@ -9,6 +9,7 @@ import {
   GetTopGainers,
   GetTodayPrice,
   GetMarketSummary,
+  GetIndex,
 } from "./all";
 
 const app = express();
