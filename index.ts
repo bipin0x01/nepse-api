@@ -101,5 +101,13 @@ app.get("/api/index/:indexcode", function (req, res) {
   });
 });
 
+app.get("/api/index", function (req, res) {
+  res.setHeader("Content-Type", "application/json");
+  const a = GetIndex();
+  a.then(function (status) {
+    res.json(status);
+  });
+});
+
 // 58 for NEPSE
 //
