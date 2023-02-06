@@ -4,10 +4,13 @@ import { SecurityBrief } from "./types/securityBrief";
 // import { SecurityDetail, SecurityDetailResponse } from "./types/securityDetail";
 // import { MarketStatus } from "./types/marketStatus";
 import https from "https";
+import dotenv from "dotenv"
 
+
+dotenv.config()
 let securityBriefList: SecurityBrief[] = [];
 
-const BASE_URL = "https://newweb.nepalstock.com/api";
+const BASE_URL = process.env.API_URL;
 
 function decode1(saltNum: number, data: number[]): number {
   return (
